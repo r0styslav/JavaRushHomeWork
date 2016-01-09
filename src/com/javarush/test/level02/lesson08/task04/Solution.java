@@ -10,7 +10,6 @@ public class Solution
 {
     public static int min(int a, int b, int c, int d)
     {
-
         //напишите тут ваш код
         return min(min(a, b),min(c, d));
 
