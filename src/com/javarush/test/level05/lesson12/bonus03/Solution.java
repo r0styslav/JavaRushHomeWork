@@ -20,16 +20,15 @@ public class Solution
         int val, max;
         if (maximum > 0)
         {
-            max = maximum;
-            maximum = 0;
-            for (int i = 0; i < max; i++)
+            max = Integer.parseInt(reader.readLine());
+            for (int i = 1; i < maximum; i++)
             {
                 val = Integer.parseInt(reader.readLine());
-                maximum = maximum > val ? maximum : val;
+                max = max > val ? max : val;
             }
 
 
-            System.out.println(maximum);
+            System.out.println(max);
         }
     }
 }
