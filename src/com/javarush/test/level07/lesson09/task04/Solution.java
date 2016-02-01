@@ -43,9 +43,22 @@ public class Solution
     {
         ArrayList<String> array = list;
         //напишите тут ваш код
-        for (int i = 0; i < array.size(); i++)
+        for (int i = 0; i < list.size(); i++)
         {
-            //if (list.get(i).contains("р") )
+            if (list.get(i).contains("р") && list.get(i).contains("л"))
+                continue;
+            if (list.get(i).contains("р"))
+            {
+                list.remove(i);
+                i--;
+                continue;
+            }
+            if (list.get(i).contains("л"))
+            {
+                list.add(i, list.get(i));
+                i++;
+                continue;
+            }
         }
         return list;
     }
