@@ -27,7 +27,7 @@ public class Solution
     {
         BufferedReader bis = new BufferedReader(new InputStreamReader(System.in));
 
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<String>();
         list.add("роза"); //0
         list.add("лира"); //1
         list.add("лоза"); //2
@@ -41,12 +41,12 @@ public class Solution
 
     public static ArrayList<String> fix(ArrayList<String> list)
     {
-        ArrayList<String> array = list;
         //напишите тут ваш код
-        for (int i = 0; i < array.size(); i++)
+        int size = list.size();
+        for (int i = 0; i < size; i++)
         {
-            //if (list.get(i).contains("р") )
+            
         }
-        return list;
+        return null;
     }
 }
