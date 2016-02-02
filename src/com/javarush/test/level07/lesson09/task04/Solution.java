@@ -42,11 +42,24 @@ public class Solution
     public static ArrayList<String> fix(ArrayList<String> list)
     {
         //напишите тут ваш код
-        int size = list.size();
-        for (int i = 0; i < size; i++)
+
+        for (int i = 0; i < list.size(); i++)
         {
-            
+            if (list.get(i).contains("р") && list.get(i).contains("л"))
+                continue;
+            if (list.get(i).contains("р"))
+            {
+                list.remove(i);
+                i--;
+                continue;
+            }
+            if (list.get(i).contains("л"))
+            {
+                list.add(i, list.get(i));
+                i++;
+                continue;
+            }
         }
-        return null;
+        return list;
     }
 }
