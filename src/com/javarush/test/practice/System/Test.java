@@ -1,41 +1,28 @@
 package com.javarush.test.practice.System;
 
 import java.io.*;
+import java.util.Date;
 
 /**
  * Created by Rostyslav.Pash on 06-Jan-16.
  */
 public class Test
 {
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws Exception
     {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Date yearStartTime = new Date();
+        yearStartTime.setHours(0);
+        yearStartTime.setMinutes(0);
+        yearStartTime.setSeconds(0);
 
-        if (Integer.parseInt(reader.readLine()) >= 1 && Integer.parseInt(reader.readLine()) <= 999)
-        {
-            int i = Integer.parseInt(reader.readLine());
+        yearStartTime.setDate(1);      // первое число
+        yearStartTime.setMonth(0);     // месяц январь, нумерация для месяцев 0-11
 
-            if (i % 2 == 0 && i < 10)
-            {
-                System.out.println("четное однозначное число");
-            } else if (i % 2 != 0 && i < 10)
-            {
-                System.out.println("нечетное однозначное число");
-            } else if (i % 2 == 0 && i >= 10 && i < 100)
-            {
-                System.out.println("четное двузначное число");
-            } else if (i % 2 != 0 && i >= 10 && i < 100)
-            {
-                System.out.println("нечетное двузначное числоо");
-            } else if (i % 2 == 0 && i > 100)
-            {
-                System.out.println("четное трехзначное число");
-            } else if (i % 2 != 0 && i > 100)
-            {
-                System.out.println("нечетное трехзначное число");
-            }
+        Date currentTime = new Date();
+        long msTimeDistance = currentTime.getTime() - yearStartTime.getTime();
+        long msDay = 24 * 60 * 60 * 1000;  //сколько миллисекунд в одних сутках
 
-
-        }
+        int dayCount = (int) (msTimeDistance/msDay); //количество целых дней
+        System.out.println("Days from start of year: " + dayCount);
     }
 }
