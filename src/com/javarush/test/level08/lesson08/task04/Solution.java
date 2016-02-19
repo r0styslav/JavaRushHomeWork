@@ -1,5 +1,4 @@
 package com.javarush.test.level08.lesson08.task04;
-
 import java.util.*;
 
 /* Удалить всех людей, родившихся летом
