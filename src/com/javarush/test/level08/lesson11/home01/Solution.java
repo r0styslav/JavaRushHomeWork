@@ -1,6 +1,7 @@
 package com.javarush.test.level08.lesson11.home01;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /* Set из котов
@@ -10,27 +11,48 @@ import java.util.Set;
 4. Реализовать метод printCats, он должен вывести на экран всех котов, которые остались во множестве. Каждый кот с новой строки.
 */
 
-public class Solution
-{
-    public static void main(String[] args)
-    {
+public class Solution {
+    public static void main(String[] args) {
         Set<Cat> cats = createCats();
-
         //напишите тут ваш код. пункт 3
-
+        //printCats(cats);
+        Iterator<Cat> iter = cats.iterator();
+        iter.next();
+        iter.remove();
         printCats(cats);
     }
 
-    public static Set<Cat> createCats()
-    {
+    public static Set<Cat> createCats() {
         //напишите тут ваш код. пункт 2
-        return null;
+        Set<Cat> cats = new HashSet<>();
+        cats.add(new Cat("Ivan"));
+        cats.add(new Cat("Moska"));
+        cats.add(new Cat("May"));
+        return cats;
     }
 
-    public static void printCats(Set<Cat> cats)
-    {
+    public static void printCats(Set<Cat> cats) {
         // пункт 4
+        for (Cat cat :
+                cats) {
+            System.out.println(cat);
+        }
     }
 
     // пункт 1
+
+    public static class Cat {
+        public String name;
+
+        public Cat(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
+
+
 }
