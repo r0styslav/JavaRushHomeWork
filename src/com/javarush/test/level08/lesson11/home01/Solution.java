@@ -15,7 +15,6 @@ public class Solution {
     public static void main(String[] args) {
         Set<Cat> cats = createCats();
         //напишите тут ваш код. пункт 3
-        //printCats(cats);
         Iterator<Cat> iter = cats.iterator();
         iter.next();
         iter.remove();
@@ -25,9 +24,9 @@ public class Solution {
     public static Set<Cat> createCats() {
         //напишите тут ваш код. пункт 2
         Set<Cat> cats = new HashSet<>();
-        cats.add(new Cat("Ivan"));
-        cats.add(new Cat("Moska"));
-        cats.add(new Cat("May"));
+        cats.add(new Cat());
+        cats.add(new Cat());
+        cats.add(new Cat());
         return cats;
     }
 
@@ -42,17 +41,6 @@ public class Solution {
     // пункт 1
 
     public static class Cat {
-        public String name;
 
-        public Cat(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
     }
-
-
 }
