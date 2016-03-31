@@ -29,7 +29,7 @@ public class Solution
         //напишите тут ваш код
 
         String newStr[] = s.split(" ");
-        
+
         for (int i = 0; i < newStr.length; i++) {
             if (i >= 0 && i < newStr.length - 1)
                 str += newStr[i].substring(0, 1).toUpperCase() + newStr[i].substring(1) + " ";
