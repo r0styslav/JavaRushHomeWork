@@ -1,13 +1,10 @@
 package com.javarush.test.level08.lesson11.home04;
 
 import java.io.BufferedReader;
-import java.io.IOException ;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /* Минимальное из N чисел
 1. Ввести с клавиатуры число N.
