@@ -23,11 +23,24 @@ public class Solution
     public static Map<String, Cat> createMap()
     {
         //напишите тут ваш код
+        Map<String, Cat> cat = new HashMap<>();
+        cat.put("Vasya", new Cat("Vas"));
+        cat.put("Ivan", new Cat("Iv"));
+        cat.put("Petro", new Cat("PEtr"));
+        cat.put("Orest", new Cat("Or"));
+        cat.put("Vita", new Cat("Vi"));
+        cat.put("John", new Cat("J"));
+        cat.put("New", new Cat("Ne"));
+        cat.put("Noob", new Cat("No"));
+        cat.put("QWE", new Cat("Q"));
+        cat.put("Asd", new Cat("A"));
+        return cat;
     }
 
     public static Set<Cat> convertMapToSet(Map<String, Cat> map)
     {
         //напишите тут ваш код
+        return new HashSet<>(map.values());
     }
 
     public static void printCatSet(Set<Cat> set)
