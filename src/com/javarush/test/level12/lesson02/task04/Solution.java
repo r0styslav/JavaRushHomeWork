@@ -4,8 +4,10 @@ package com.javarush.test.level12.lesson02.task04;
 Написать метод, который определяет, объект какого класса ему передали, и выводит на экран одну из надписей: Кошка, Собака, Птица, Лампа.
 */
 
-public class Solution {
-    public static void main(String[] args) {
+public class Solution
+{
+    public static void main(String[] args)
+    {
         printObjectType(new Cat());
         printObjectType(new Bird());
         printObjectType(new Lamp());
@@ -36,5 +38,6 @@ public class Solution {
     }
 
     public static class Lamp {
+
     }
 }
