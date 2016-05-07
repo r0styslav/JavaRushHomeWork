@@ -12,9 +12,9 @@ public class Solution
 
     public static void main(String[] args) throws Exception
     {
-/*       Fox bigFox = new BigFox();
+       Fox bigFox = new BigFox();
        System.out.println(bigFox.getName());
-       System.out.println(bigFox.getColor());*/
+       System.out.println(bigFox.getColor());
     }
 
     public interface Animal
@@ -22,14 +22,19 @@ public class Solution
         Color getColor();
     }
 
-/*      public static class Fox implements Animal
+      public abstract static class Fox implements Animal
       {
           public String getName() {
               return "Fox";
           }
-      }*/
 
-    public abstract static class BigFox
+          @Override
+          public Color getColor() {
+              return Color.BLACK;
+          }
+      }
+
+    public static class BigFox extends Fox
     {
 
     }
