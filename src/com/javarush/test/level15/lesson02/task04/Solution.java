@@ -30,7 +30,7 @@ public class Solution {
         }
 
         @Override
-        public Book getBook() {
+        public AgathaChristieBook getBook() {
             return this;
         }
 
@@ -48,7 +48,7 @@ public class Solution {
         }
 
         @Override
-        public Book getBook() {
+        public MarkTwainBook getBook() {
             return this;
         }
 
