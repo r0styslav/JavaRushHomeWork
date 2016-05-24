@@ -21,6 +21,7 @@ public class Solution {
         books.add(new AgathaChristieBook("Hercule Poirot"));
         System.out.println(books);
     }
+
     public static class AgathaChristieBook extends Book {
         private String author;
         public AgathaChristieBook(String author) {
@@ -29,7 +30,7 @@ public class Solution {
         }
 
         @Override
-        public Book getBook() {
+        public AgathaChristieBook getBook() {
             return this;
         }
 
@@ -47,7 +48,7 @@ public class Solution {
         }
 
         @Override
-        public Book getBook() {
+        public MarkTwainBook getBook() {
             return this;
         }
 
@@ -56,6 +57,7 @@ public class Solution {
             return author;
         }
     }
+
 
     public abstract static class Book {
         private String author;
