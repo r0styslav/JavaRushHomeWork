@@ -21,6 +21,7 @@ public class Solution {
 
     static {
         //throw an exception here - выбросьте эксепшн тут
+        B = A/0;
     }
 
     public static int B = 5;
