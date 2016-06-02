@@ -26,14 +26,15 @@ public class Solution {
 
     public static String factorial(int n) {
         //add your code here
+        BigInteger result = new BigInteger("1");
         if (n < 0)
             return "0";
-        if (n == 0) {
+        if (n == 0)
             return "1";
+        for (int i = 1; i <= n; i++) {
+            result = BigInteger.valueOf(i).multiply(result);
         }
-        long l = n;
-        BigInteger.valueOf(l);
-        BigInteger.multiply(BigInteger.valueOf(Long.parseLong(factorial(n - 1))));
+        return result.toString();
     }
 
 }
