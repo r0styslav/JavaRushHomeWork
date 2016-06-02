@@ -18,6 +18,7 @@ First name
 
 public class Solution {
     static {
+
         init();
     }
     static {
