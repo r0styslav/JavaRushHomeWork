@@ -17,8 +17,9 @@ public class Solution {
 
     public static void main(String[] args) throws InterruptedException {
         for (int i = 0; i < COUNT; i++) {
-            new SleepingThread();
+            Thread thread = new SleepingThread();
             //напишите тут ваш код
+            thread.join();
         }
     }
 
@@ -36,6 +37,11 @@ public class Solution {
                 System.out.println(this);
                 if (--countDownIndex == 0) return;
                 //add sleep here - добавь sleep тут
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    System.out.println("Нить прервана");
+                }
             }
         }
 
