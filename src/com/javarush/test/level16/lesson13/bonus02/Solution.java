@@ -3,7 +3,6 @@ package com.javarush.test.level16.lesson13.bonus02;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,69 +23,10 @@ public class Solution {
 
     static {
         threads.add(new Thread1());
-    }
-    static class Thread5 extends Thread{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str = "";
-        int sum = 0;
-        @Override
-        public void run() {
-            try {
-                while ((str = br.readLine()) != "N") {
-                    int i = Integer.parseInt(str);
-                    sum += i;
-                }
-                System.out.println(sum);
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    static class Thread4 extends Thread implements Message{
-
-        @Override
-        public void run() {
-            if (isInterrupted()) {
-                this.interrupt();
-            }
-        }
-
-        @Override
-        public void showWarning() {
-            this.interrupt();
-        }
-    }
-
-    static class Thread3 extends Thread {
-
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    System.out.println("Ура");
-
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    static class Thread2 extends Thread {
-
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    System.out.println("InterruptedException");
-                }
-            }
-        }
+        threads.add(new Thread2());
+        threads.add(new Thread3());
+        threads.add(new Thread4());
+        threads.add(new Thread5());
     }
 
     static class Thread1 extends Thread {
@@ -94,10 +34,67 @@ public class Solution {
         @Override
         public void run() {
             while (true) {
-
             }
         }
     }
+    static class Thread2 extends Thread {
+
+        @Override
+        public void run() {
+            try {
+                while (!isInterrupted()) { }
+                throw new InterruptedException();
+            } catch (InterruptedException e) {
+                System.out.println("InterruptedException");
+            }
+        }
+    }
+    static class Thread3 extends Thread {
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    System.out.println("Ура");
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                }
+            }
+        }
+    }
+    static class Thread4 extends Thread implements Message {
+
+        @Override
+        public void run() {
+            while (!isInterrupted()) { }
+        }
+
+        @Override
+        public void showWarning() {
+            if (this.isAlive())
+            this.interrupt();
+        }
+    }
+    static class Thread5 extends Thread {
+        private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        private String str = "";
+        private int sum = 0;
+
+        @Override
+        public void run() {
+            try {
+                while (!(str = br.readLine()).equals("N")) {
+                    sum += Integer.parseInt(str);
+                }
+                br.close();
+                System.out.println(sum);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 
 }
