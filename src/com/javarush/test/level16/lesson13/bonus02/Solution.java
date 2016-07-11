@@ -71,8 +71,11 @@ public class Solution {
 
         @Override
         public void showWarning() {
-            if (this.isAlive())
             this.interrupt();
+            try
+            {
+                this.join();
+            }catch (InterruptedException e){}
         }
     }
     static class Thread5 extends Thread {
