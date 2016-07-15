@@ -3,6 +3,7 @@ package com.javarush.test.level17.lesson10.bonus01;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -34,25 +35,28 @@ public class Solution {
         allPeople.add(Person.createMale("Петров Петр", new Date()));  //сегодня родился    id=1
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
         //start here - начни тут
         String inputLine = "";
-        while (!inputLine.equals("exit")) {
+        //while (!inputLine.equals("exit")) {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             inputLine = br.readLine();
             List<String> parameters = new ArrayList<>(Arrays.asList(inputLine.split(" ")));
 
             switch (parameters.get(0)) {
                 case "-c":
-                    allPeople.add(parameters.get(2).equalsIgnoreCase("м") ? Person.createMale(parameters.get(1), new Date(parameters.get(3)))
-                            : Person.createFemale(parameters.get(1), new Date(parameters.get(3))));
+                    allPeople.add(parameters.get(2).equalsIgnoreCase("м")
+                            ? Person.createMale(parameters.get(1), new SimpleDateFormat("dd/MM/yyyy").parse(parameters.get(3)))
+                            : Person.createFemale(parameters.get(1), new SimpleDateFormat("dd/MM/yyyy").parse(parameters.get(3))));
+
                     System.out.println(allPeople.size() - 1);
                     break;
                 case "-u":
+                    allPeople.remove(Integer.parseInt(parameters.get(1)));
                     allPeople.add(Integer.parseInt(parameters.get(1)),
-                            parameters.get(2).equalsIgnoreCase("м")
-                                    ? Person.createMale(parameters.get(2), new Date(parameters.get(4)))
-                                    : Person.createFemale(parameters.get(2), new Date(parameters.get(4))));
+                            parameters.get(3).equalsIgnoreCase("м")
+                                    ? Person.createMale(parameters.get(2), new SimpleDateFormat("dd/MM/yyyy").parse(parameters.get(4)))
+                                    : Person.createFemale(parameters.get(2), new SimpleDateFormat("dd/MM/yyyy").parse(parameters.get(4))));
                     break;
                 case "-d":
                     allPeople.remove(Integer.parseInt(parameters.get(1)));
@@ -62,9 +66,9 @@ public class Solution {
                     System.out.println(index + ": "
                             + allPeople.get(index).getName() + " "
                             + allPeople.get(index).getSex() + " "
-                            + new SimpleDateFormat(allPeople.get(index).getBirthDay().toString(), Locale.ENGLISH).toString())
+                            + new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH).format(allPeople.get(index).getBirthDay()))
                     break;
             }
-        }
+        //}
     }
 }
