@@ -9,6 +9,7 @@ import java.util.*;
 4. Список будет использоваться нитями, поэтому позаботьтесь, чтобы все методы были синхронизированы.
 */
 
+
 public class Solution implements List<Long> {
     private volatile ArrayList<Long> original = new ArrayList<Long>();
 
@@ -29,7 +30,9 @@ public class Solution implements List<Long> {
     }
 
     @Override
+
     public synchronized Iterator<Long> iterator() {
+
         return original.iterator();
     }
 
@@ -46,6 +49,7 @@ public class Solution implements List<Long> {
     @Override
     public synchronized boolean add(Long aLong) {
         return original.add(aLong);
+
     }
 
     @Override
@@ -60,6 +64,7 @@ public class Solution implements List<Long> {
 
     @Override
     public synchronized boolean addAll(Collection<? extends Long> c) {
+
         return original.addAll(c);
     }
 

@@ -9,34 +9,29 @@ package com.javarush.test.level18.lesson05.task03;
 */
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Solution {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        FileInputStream inputStream;
-        FileOutputStream outputStream;
-        List<Integer> intList = new ArrayList<>();
-        String[] files = br.readLine().split(", ");
-        boolean parne;
-        int count;
+        FileInputStream inputStream = new FileInputStream(br.readLine());
+        FileOutputStream outputStream1 = new FileOutputStream(br.readLine());
+        FileOutputStream outputStream2 = new FileOutputStream(br.readLine());
+        int size = inputStream.available();
+        int countOfReadingBytes;
+        int firstHalf = size / 2;
+        int secondHalf = size - firstHalf;
 
-        for (String file :
-                files) {
-            System.out.println(file);
-        }
-
-        inputStream = new FileInputStream(files[0]);
-        parne = inputStream.available()%2 == 0;
-        count = inputStream.available();
+        byte[] b = new byte[inputStream.available()];
 
         while (inputStream.available() > 0) {
-            if (parne)
-            intList.add(inputStream.read());
+            countOfReadingBytes = inputStream.read(b);
+            outputStream1.write(b, 0, firstHalf);
+            outputStream2.write(b, firstHalf, secondHalf);
         }
 
-
+        br.close();
+        inputStream.close();
+        outputStream1.close();
 
     }
 }
