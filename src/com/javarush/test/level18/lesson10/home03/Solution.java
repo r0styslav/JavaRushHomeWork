@@ -7,38 +7,27 @@ package com.javarush.test.level18.lesson10.home03;
 */
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        OutputStream outputStream;
-        InputStream inputStream;
-        String line;
-        List<String> files = new ArrayList<>();
-
-        // read files from console
-        for (int i = 0; i < 3; i++) {
-            files.add(br.readLine());
-        }
+        OutputStream outputStream = new FileOutputStream(br.readLine());
+        FileInputStream inputStream1 = new FileInputStream(br.readLine());
+        FileInputStream inputStream2 = new FileInputStream(br.readLine());
 
         // write in 1st file - > 2nd file
-        inputStream = new BufferedInputStream(new FileInputStream(files.get(1)));
-        outputStream = new BufferedOutputStream(new FileOutputStream(files.get(0), true));
-        byte[] data = new byte[inputStream.available()];
-        inputStream.read(data);
-        outputStream.write(data);
+        while (inputStream1.available() > 0)
+            outputStream.write(inputStream1.read());
 
         // write in 1st file -> 3rd file
-        inputStream = new BufferedInputStream(new FileInputStream(files.get(2)));
-        inputStream.read(data);
-        outputStream.write(data);
+        while (inputStream2.available() > 0)
+            outputStream.write(inputStream2.read());
 
         // close all streams
         br.close();
         outputStream.close();
-        inputStream.close();
+        inputStream1.close();
+        inputStream2.close();
 
     }
 }
