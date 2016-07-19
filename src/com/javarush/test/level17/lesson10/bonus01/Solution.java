@@ -66,7 +66,7 @@ public class Solution {
                     System.out.println(index + ": "
                             + allPeople.get(index).getName() + " "
                             + allPeople.get(index).getSex() + " "
-                            + new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH).format(allPeople.get(index).getBirthDay()))
+                            + new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH).format(allPeople.get(index).getBirthDay()));
                     break;
             }
         //}
