@@ -77,6 +77,7 @@ public class Solution {
                             + allPeople.get(index).getSex() + " "
                             + new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH).format(allPeople.get(index).getBirthDay()));*/
 
+
                     break;
             }
         }
