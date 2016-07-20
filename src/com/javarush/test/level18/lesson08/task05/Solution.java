@@ -42,3 +42,4 @@ public class Solution {
         void setHeaderText(String newHeaderText);
     }
 }
+

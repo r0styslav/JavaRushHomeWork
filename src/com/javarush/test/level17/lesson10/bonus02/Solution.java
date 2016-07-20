@@ -1,32 +1,33 @@
-package com.javarush.test.level17.lesson10.bonus01;
+package com.javarush.test.level17.lesson10.bonus02;
 
-
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/* CRUD
-CrUD - Create, Update, Delete
+/* CRUD 2
+CrUD Batch - multiple Creation, Updates, Deletion
+!!!РЕКОМЕНДУЕТСЯ выполнить level17.lesson10.bonus01 перед этой задачей!!!
+
 Программа запускается с одним из следующих наборов параметров:
--c name sex bd
--u id name sex bd
--d id
--i id
+-c name1 sex1 bd1 name2 sex2 bd2 ...
+-u id1 name1 sex1 bd1 id2 name2 sex2 bd2 ...
+-d id1 id2 id3 id4 ...
+-i id1 id2 id3 id4 ...
 Значения параметров:
 name - имя, String
 sex - пол, "м" или "ж", одна буква
 bd - дата рождения в следующем формате 15/04/1990
--c  - добавляет человека с заданными параметрами в конец allPeople, выводит id (index) на экран
--u  - обновляет данные человека с данным id
--d  - производит логическое удаление человека с id
--i  - выводит на экран информацию о человеке с id: name sex (м/ж) bd (формат 15-Apr-1990)
+-с  - добавляет всех людей с заданными параметрами в конец allPeople, выводит id (index) на экран в соответствующем порядке
+-u  - обновляет соответствующие данные людей с заданными id
+-d  - производит логическое удаление всех людей с заданными id
+-i  - выводит на экран информацию о всех людях с заданными id: name sex bd
 
 id соответствует индексу в списке
+Формат вывода даты рождения 15-Apr-1990
 Все люди должны храниться в allPeople
+Порядок вывода данных соответствует вводу данных
+Обеспечить корректную работу с данными для множества нитей (чтоб не было затирания данных)
 Используйте Locale.ENGLISH в качестве второго параметра для SimpleDateFormat
-
-Пример параметров: -c Миронов м 15/04/1990
 */
 
 public class Solution {
@@ -37,8 +38,7 @@ public class Solution {
         allPeople.add(Person.createMale("Петров Петр", new Date()));  //сегодня родился    id=1
     }
 
-
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws ParseException {
         //start here - начни тут
         String inputLine = "";
         //while (!inputLine.equals("exit")) {
@@ -49,7 +49,7 @@ public class Solution {
                     allPeople.add(parameters.get(2).equalsIgnoreCase("м")
                             ? Person.createMale(parameters.get(1), new SimpleDateFormat("dd/MM/yyyy").parse(parameters.get(3)))
                             : Person.createFemale(parameters.get(1), new SimpleDateFormat("dd/MM/yyyy").parse(parameters.get(3))));
-
+                    System.out.println(allPeople.size() - 1);
                     System.out.println(allPeople.size() - 1);
                     break;
                 case "-u":
@@ -68,7 +68,7 @@ public class Solution {
                     break;
                 case "-i":
                     int index = Integer.parseInt(parameters.get(1));
-                    String sex = allPeople.get(index).getSex().equals(Sex.MALE) ? "м" : "ж";
+                    String sex = allPeople.get(index).getSex().equals(com.javarush.test.level17.lesson10.bonus01.Sex.MALE) ? "м" : "ж";
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
                     System.out.println(allPeople.get(index).getName()
                             + " " + sex
@@ -83,3 +83,4 @@ public class Solution {
         //}
     }
 }
+

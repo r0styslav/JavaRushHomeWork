@@ -16,22 +16,14 @@ public class Solution {
         FileInputStream inputStream = new FileInputStream(br.readLine());
         FileOutputStream outputStream1 = new FileOutputStream(br.readLine());
         FileOutputStream outputStream2 = new FileOutputStream(br.readLine());
-        int size = inputStream.available();
-        int countOfReadingBytes;
-        int firstHalf = size / 2;
-        int secondHalf = size - firstHalf;
-
-        byte[] b = new byte[inputStream.available()];
-
-        while (inputStream.available() > 0) {
-            countOfReadingBytes = inputStream.read(b);
-            outputStream1.write(b, 0, firstHalf);
-            outputStream2.write(b, firstHalf, secondHalf);
-        }
-
+        byte[] buffer1 = new byte[inputStream.available() / 2 + inputStream.available() % 2];
+        byte[] buffer2 = new byte[inputStream.available() - buffer1.length];
+        outputStream1.write(buffer1, 0, inputStream.read(buffer1));
+        outputStream2.write(buffer2, 0, inputStream.read(buffer2));
         br.close();
         inputStream.close();
         outputStream1.close();
+        outputStream2.close();
 
     }
 }
