@@ -24,7 +24,7 @@ public class Solution {
         String line;
         String fileOutputName = null;
         Set<String> fileSet = new TreeSet<>();
-        // Read all file names from console ans store
+        // Read all file names from console and store
         while (!(line = br.readLine()).equals("end")) {
             fileSet.add(line);
             if (fileOutputName == null) {
