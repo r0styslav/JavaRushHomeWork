@@ -35,74 +35,65 @@ public class Solution {
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String file1 = reader.readLine();
-        //String file1 = "c:\\1.txt";
-        String file2 = reader.readLine();
-        //String file2 = "c:\\2.txt";
+        String f1 = reader.readLine();
+        //String f1 = "c:\\1.txt";
+        String f2 = reader.readLine();
+        //String f2 = "c:\\2.txt";
         ArrayList<String> file1Lines = new ArrayList<>();
         ArrayList<String> file2Lines = new ArrayList<>();
-        ArrayList<String> SAME = new ArrayList<>();
-        ArrayList<String> ADDED = new ArrayList<>();
-        ArrayList<String> REMOVED = new ArrayList<>();
 
         reader.close();
-        BufferedReader br1 = new BufferedReader(new FileReader(file1));
-        BufferedReader br2 = new BufferedReader(new FileReader(file2));
+        BufferedReader br1 = new BufferedReader(new FileReader(f1));
+        BufferedReader br2 = new BufferedReader(new FileReader(f2));
         while (br1.ready()) {
             file1Lines.add(br1.readLine());
         }
         while (br2.ready()) {
             file2Lines.add(br2.readLine());
         }
-        for (int i = 0; i < file1Lines.size(); i++) {
-            for (int j = 0; j < file1Lines.size(); j++) {
-                if (file1Lines.contains(file2Lines.get(j))) {
-                    //if (!SAME.contains(file2Lines.get(j)))
-                        SAME.add(file2Lines.get(j));
-                    file2Lines.remove(j);
-                } else if (!file2Lines.contains(file1Lines.get(i))) {
-                    if (!REMOVED.contains(file1Lines.get(i)))
-                        REMOVED.add(file1Lines.get(i));
-                } else if (!file1Lines.contains(file2Lines.get(j))) {
-                    if (!ADDED.contains(file2Lines.get(j)))
-                        ADDED.add(file2Lines.get(j));
-                }
-            }
-
-        }
-
-        int max = Math.max(SAME.size(), Math.max(REMOVED.size(), ADDED.size()));
+        int max = Math.max(file1Lines.size(), file2Lines.size());
         for (int i = 0; i < max; i++) {
-            if (!ADDED.isEmpty()) {
-                lines.add(new LineItem(Type.ADDED, ADDED.get(0)));
-                ADDED.remove(0);
+            if (!file1Lines.isEmpty()) {
+                // SAME: when line1[0] == line2[0]
+                if (!file2Lines.isEmpty() && file1Lines.get(0).equals(file2Lines.get(0))) {
+                    sameLines(file1Lines, file2Lines);
+                } else
+                    // ADDED: when line1[0] != line2[0] but
+                    // SAME: line1[0] == lien2[1]
+                    if ((file2Lines.size() > 1) && file1Lines.get(0).equals(file2Lines.get(1))) {
+                        addLine(file2Lines);
+                        i--;
+                    } else {
+                        // REMOVED: when line1[0] != line2[0] != line2[1]
+                        removeLine(file1Lines);
+                    }
+            } else if (file1Lines.isEmpty() && !file2Lines.isEmpty()) {
+                addLine(file2Lines);
             }
-
-            if (!SAME.isEmpty()) {
-                lines.add(new LineItem(Type.SAME, SAME.get(0)));
-                SAME.remove(0);
-            }
-
-            if (!REMOVED.isEmpty()) {
-                lines.add(new LineItem(Type.REMOVED, REMOVED.get(0)));
-                REMOVED.remove(0);
-            }
-
-            if (!SAME.isEmpty()) {
-                lines.add(new LineItem(Type.SAME, SAME.get(0)));
-                SAME.remove(0);
-            }
-
         }
 /*
         for (LineItem li : lines) {
             System.out.println(li);
-        }
-        System.out.println();*/
-
+        }*/
         reader.close();
         br1.close();
         br2.close();
+    }
+
+    private static void removeLine(ArrayList<String> line1) {
+        lines.add(new LineItem(Type.REMOVED, line1.get(0)));
+        line1.remove(0);
+    }
+
+    private static void addLine(ArrayList<String> line2) {
+        lines.add(new LineItem(Type.ADDED, line2.get(0)));
+        line2.remove(0);
+    }
+
+    private static void sameLines(ArrayList<String> line1, ArrayList<String> line2) {
+        lines.add(new LineItem(Type.SAME, line1.get(0)));
+        line1.remove(0);
+        line2.remove(0);
     }
 
 
@@ -123,7 +114,7 @@ public class Solution {
 
         @Override
         public String toString() {
-            return "Type: " + type + " line: " + line;
+            return type + " " + line;
         }
     }
 
