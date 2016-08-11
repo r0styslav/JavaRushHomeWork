@@ -1,10 +1,9 @@
 package com.javarush.test.level20.lesson02.task02;
 
+import com.javarush.test.level20.lesson02.task02.User.Country;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 /* Читаем и пишем в файл: JavaRush
 Реализуйте логику записи в файл и чтения из файла для класса JavaRush
@@ -16,19 +15,32 @@ public class Solution {
         //you can find your_file_name.tmp in your TMP directory or fix outputStream/inputStream according to your real file location
         //вы можете найти your_file_name.tmp в папке TMP или исправьте outputStream/inputStream в соответствии с путем к вашему реальному файлу
         try {
-            File your_file_name = File.createTempFile("your_file_name", null);
-            OutputStream outputStream = new FileOutputStream(your_file_name);
-            InputStream inputStream = new FileInputStream(your_file_name);
+            File test = new File("C:\\!Work\\test.txt");
+
+            OutputStream outputStream = new FileOutputStream(test);
+            InputStream inputStream = new FileInputStream(test);
+
+            //remove this
+
 
             JavaRush javaRush = new JavaRush();
             //initialize users field for the javaRush object here - инициализируйте поле users для объекта javaRush тут
+            User user = new User();
+            user.setFirstName("Rost");
+            user.setLastName("Last");
+            user.setBirthDate(new Date());
+            user.setMale(true);
+            user.setCountry(Country.UKRAINE);
+            javaRush.users.add(user);
+            System.out.println(user);
+            //================================================================
             javaRush.save(outputStream);
             outputStream.flush();
 
             JavaRush loadedObject = new JavaRush();
             loadedObject.load(inputStream);
             //check here that javaRush object equals to loadedObject object - проверьте тут, что javaRush и loadedObject равны
-
+            System.out.println(loadedObject.users.get(0));
             outputStream.close();
             inputStream.close();
 
@@ -50,7 +62,7 @@ public class Solution {
             for (User u : users) {
                 pw.println(u.getFirstName());
                 pw.println(u.getLastName());
-                pw.println(u.getBirthDate());
+                pw.println(u.getBirthDate().getTime());
                 pw.println(u.isMale());
                 pw.println(u.getCountry());
             }
@@ -65,9 +77,10 @@ public class Solution {
                 User u = new User();
                 u.setFirstName(br.readLine());
                 u.setLastName(br.readLine());
-                u.setBirthDate(new Date(br.readLine()));
-                u.setFirstName(br.readLine());
-                u.setFirstName(br.readLine());
+                u.setBirthDate(new Date(Long.parseLong(br.readLine())));
+                u.setMale(Boolean.parseBoolean(br.readLine()));
+                u.setCountry(User.Country.valueOf(br.readLine()));
+                users.add(u);
             }
         }
     }
