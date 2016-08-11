@@ -35,19 +35,16 @@ public class Solution {
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String file1 = reader.readLine();
-        //String file1 = "c:\\1.txt";
-        String file2 = reader.readLine();
-        //String file2 = "c:\\2.txt";
+        String f1 = reader.readLine();
+        //String f1 = "c:\\1.txt";
+        String f2 = reader.readLine();
+        //String f2 = "c:\\2.txt";
         ArrayList<String> file1Lines = new ArrayList<>();
         ArrayList<String> file2Lines = new ArrayList<>();
-        ArrayList<String> SAME = new ArrayList<>();
-        ArrayList<String> ADDED = new ArrayList<>();
-        ArrayList<String> REMOVED = new ArrayList<>();
 
         reader.close();
-        BufferedReader br1 = new BufferedReader(new FileReader(file1));
-        BufferedReader br2 = new BufferedReader(new FileReader(file2));
+        BufferedReader br1 = new BufferedReader(new FileReader(f1));
+        BufferedReader br2 = new BufferedReader(new FileReader(f2));
         while (br1.ready()) {
             file1Lines.add(br1.readLine());
         }
@@ -55,10 +52,49 @@ public class Solution {
             file2Lines.add(br2.readLine());
         }
 
-
+        int max = Math.max(file1Lines.size(), file2Lines.size());
+        for (int i = 0; i < max; i++) {
+            if (!file1Lines.isEmpty()) {
+                // SAME: when line1[0] == line2[0]
+                if (!file2Lines.isEmpty() && file1Lines.get(0).equals(file2Lines.get(0))) {
+                    sameLines(file1Lines, file2Lines);
+                } else
+                    // ADDED: when line1[0] != line2[0] but
+                    // SAME: line1[0] == lien2[1]
+                    if ((file2Lines.size() > 1) && file1Lines.get(0).equals(file2Lines.get(1))) {
+                        addLine(file2Lines);
+                        i--;
+                    } else {
+                        // REMOVED: when line1[0] != line2[0] != line2[1]
+                        removeLine(file1Lines);
+                    }
+            } else if (file1Lines.isEmpty() && !file2Lines.isEmpty()) {
+                addLine(file2Lines);
+            }
+        }
+/*
+        for (LineItem li : lines) {
+            System.out.println(li);
+        }*/
         reader.close();
         br1.close();
         br2.close();
+    }
+
+    private static void removeLine(ArrayList<String> line1) {
+        lines.add(new LineItem(Type.REMOVED, line1.get(0)));
+        line1.remove(0);
+    }
+
+    private static void addLine(ArrayList<String> line2) {
+        lines.add(new LineItem(Type.ADDED, line2.get(0)));
+        line2.remove(0);
+    }
+
+    private static void sameLines(ArrayList<String> line1, ArrayList<String> line2) {
+        lines.add(new LineItem(Type.SAME, line1.get(0)));
+        line1.remove(0);
+        line2.remove(0);
     }
 
 
@@ -75,6 +111,11 @@ public class Solution {
         public LineItem(Type type, String line) {
             this.type = type;
             this.line = line;
+        }
+
+        @Override
+        public String toString() {
+            return type + " " + line;
         }
     }
 }
