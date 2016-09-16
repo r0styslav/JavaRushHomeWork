@@ -1,5 +1,8 @@
 package com.javarush.test.level22.lesson13.task03;
 
+
+import java.util.regex.Pattern;
+
 /* Проверка номера телефона
 Метод checkTelNumber должен проверять, является ли аргумент telNumber валидным номером телефона.
 Критерии валидности:
@@ -26,53 +29,33 @@ package com.javarush.test.level22.lesson13.task03;
 public class Solution {
     public static void main(String[] args) {
 
-        System.out.println(checkTelNumber("+380501234567"));
-        System.out.println(checkTelNumber("+38(050)1234567"));
-        System.out.println(checkTelNumber("+38050123-45-67"));
-        System.out.println(checkTelNumber("050123-4567"));
-        System.out.println(checkTelNumber("+38)050(1234567"));
-        System.out.println(checkTelNumber("+38(050)1-23-45-6-7"));
-        System.out.println(checkTelNumber("+381-(050)23-45-6-7"));
-        System.out.println(checkTelNumber("+050ххх4567"));
-        System.out.println(checkTelNumber("050123456"));
-        System.out.println(checkTelNumber("(0)501234567"));
+        System.out.println(checkTelNumber("+380501234567"));    //true
+        System.out.println(checkTelNumber("+38(050)1234567"));  //true
+        System.out.println(checkTelNumber("+38050123-45-67"));  //true
+        System.out.println(checkTelNumber("050123-4567"));      //true
+        System.out.println(checkTelNumber("+38)050(1234567"));  //false
+        System.out.println(checkTelNumber("+38(050)1-23-45-6-7"));  //false
+        System.out.println(checkTelNumber("+381-(050)23-45-6-7"));  //false
+        System.out.println(checkTelNumber("+050ххх4567"));          //false
+        System.out.println(checkTelNumber("050123456"));        //false
+        System.out.println(checkTelNumber("(0)501234567"));     //false
+        System.out.println(checkTelNumber("38(050)12345"));     //true
+        System.out.println(checkTelNumber("+38050(123)4512"));  //true
+        System.out.println(checkTelNumber("(050)1234567"));     //true
+        System.out.println(checkTelNumber("-(050)1234567"));    //false
+        System.out.println(checkTelNumber("(050)123-4-567"));   //true
+
     }
-    public static boolean checkTelNumber(String telNumber)
-    {
-        if (telNumber==null)
-            return false;
-        if (telNumber.length()<10)
-            return false;
-        //CountNumbers
-        int countNumbers = 0;
-        for (int i=0;i<telNumber.length();i++)
-        {
-            String simbol = "" + telNumber.charAt(i);
-            if (isDigit(simbol))
-                countNumbers++;
+    public static boolean checkTelNumber(String telNumber) {
+        if (telNumber == null) return false;
+        String match10 = "^\\d*(\\(\\d{3}\\))?\\d*-?\\d+-?\\d+";
+        String match12 = "^\\+\\d+(\\(\\d{3}\\))?\\d*-?\\d+-?\\d+";
+        String onlyD = telNumber.replaceAll("\\D", ""); // create new String only with digits
+        if (onlyD.length() == 12) {
+            return Pattern.matches(match12, telNumber);
+        } else if (onlyD.length() == 10) {
+            return Pattern.matches(match10, telNumber);
         }
-        String regexp1 = "(\\+)?([0-9])*(\\([0-9]{3}\\))?([0-9])*(\\-)?([0-9])+(\\-)?([0-9])*";
-        String regexp2 = "(\\+)?([0-9])*(\\([0-9]{3}\\))?([0-9])*";
-        if (telNumber.charAt(0)=='+' && telNumber.matches(regexp1) && countNumbers==12 && telNumber.charAt(1)!='-')
-            return true;
-        else if (telNumber.charAt(0)=='+' && telNumber.matches(regexp2) && countNumbers==12)
-            return true;
-        else if (telNumber.matches(regexp1) && countNumbers==10 && telNumber.charAt(0)!='-')
-            return true;
-        else if (telNumber.matches(regexp2) && countNumbers==10)
-            return true;
         return false;
-    }
-    public static boolean isDigit(String str)
-    {
-        try
-        {
-            Integer.parseInt(str);
-            return true;
-        }
-        catch (Exception ex)
-        {
-            return false;
-        }
     }
 }

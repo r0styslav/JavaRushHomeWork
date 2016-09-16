@@ -10,22 +10,31 @@ import java.util.List;
 */
 public class Solution {
     public static List<Iterator> iterators = new LinkedList<>();
-
     private int countItems;
-
     public Iterator getIterator(final String name) {
-        class LocalIterator implements Iterator {
-            public LocalIterator() {
-                countItems++;
-                System.out.println(name + " item " + countItems);
-            }
-
+        return new Iterator() {
+            @Override
             public Iterator next() {
-                return new LocalIterator();
+                ++countItems;
+                System.out.println(name + " item " + countItems);
+                return this;
             }
-        }
-        return new LocalIterator();
+        }.next();
     }
+
+    /*
+    public Iterator getIterator(final String name) {
+    class LocalIterator implements Iterator {
+        public LocalIterator() {
+            countItems++;
+            System.out.println(name + " item " + countItems);
+        }
+        public Iterator next() {
+            return new LocalIterator();
+        }
+    }
+    return new LocalIterator();
+}*/
 
     public static void main(String[] args) {
         Solution solution = new Solution();
