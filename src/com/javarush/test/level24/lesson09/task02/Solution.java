@@ -32,6 +32,7 @@ public class Solution {
         String[] filepart = {"closed {4}", "open {2} and last {3}"};
 
         ChoiceFormat fileform = new ChoiceFormat(filelimits, filepart);
+
         Format[] testFormats = {null, null, dateFormat, fileform};
         MessageFormat pattform = new MessageFormat("{0}   {1} | {5} {6}");
         pattform.setFormats(testFormats);
@@ -51,6 +52,7 @@ public class Solution {
     public static void sort(List<Stock> list) {
         Collections.sort(list, new Comparator<Stock>() {
             public int compare(Stock stock1, Stock stock2) {
+
                 int compareNames = ((String) stock1.get("name")).compareTo((String) stock2.get("name"));
                 if (compareNames != 0) {
                     return compareNames;

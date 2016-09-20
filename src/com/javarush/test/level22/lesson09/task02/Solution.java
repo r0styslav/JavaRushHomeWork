@@ -23,6 +23,7 @@ public class Solution {
         System.out.println(getCondition(m));
     }
 
+
     public static StringBuilder getCondition(Map<String, String> params) {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String> map : params.entrySet()) {
