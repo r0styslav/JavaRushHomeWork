@@ -1,7 +1,10 @@
+
 package com.javarush.test.level20.lesson10.bonus01;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 
 /* Алгоритмы-числа
 Число S состоит из M чисел, например, S=370 и M(количество цифр)=3
@@ -14,6 +17,8 @@ getNumbers должен возвращать все такие числа в п�
 8208 = 8*8*8*8 + 2*2*2*2 + 0*0*0*0 + 8*8*8*8
 На выполнение дается 10 секунд и 50 МБ памяти.
 */
+/*
+
 public class Solution {
     public static int[] getNumbers(int N) {
         int[] result = null;
@@ -89,7 +94,7 @@ public class Solution {
         return digits;
     }
 
-/*    public static void main(String[] args) {
+    public static void main(String[] args) {
         Long t0 = System.currentTimeMillis();
         int n = 21474672;
         int[] numbers = getNumbers(n);
@@ -100,5 +105,74 @@ public class Solution {
             System.out.print(numbers[i] + ", ");
         }
         System.out.println();
-    }*/
+    }
+}
+*/
+
+public class Solution {
+    private static int[] buffer= new int[10];
+    static int[] digitArr=new int[20];
+    static{
+        for(int t=0;t<10;t++){
+            buffer[t]=myPow(t,1);
+        }
+    }
+    public static void main(String args[]){
+        long a=System.currentTimeMillis();
+        int[] rez=getNumbers(146511208);
+        long b=System.currentTimeMillis();
+        System.out.println("time seconds "+(b-a)/1000);
+        System.out.println("memory "+(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()));
+        for(int i=0;i<rez.length;i++){
+            System.out.print(rez[i]+", ");
+        }
+    }
+    private static void addToDigitArr(int digit){
+        if((digitArr[digit]+1)>9&&digit<digitArr.length)
+        {
+            digitArr[digit]=0;
+            addToDigitArr(digit+1);
+        } else{
+            digitArr[digit]=digitArr[digit]+1;
+        }
+    }
+    public static int[] getNumbers(int N) {
+        int[] result = null;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int digit=1;
+        int temp=0;
+        int temp10=10;
+        for(int i=1;i<N;i++){
+            addToDigitArr(0);
+            if(temp==temp10){
+                temp10=temp10*10;
+                digit++;
+                for(int t=0;t<10;t++){
+                    buffer[t]=myPow(t,digit);
+                }
+            }
+            temp++;
+            int MustBeEqualI=0;
+            for(int k=digit-1;k>=0;k--){
+                MustBeEqualI = MustBeEqualI+myQuickPow(digitArr[k],digit);
+                if(MustBeEqualI>i)break;
+            }
+            if(MustBeEqualI==i&&i!=0)list.add(i);
+        }
+        result=new int[list.size()];
+        for(int i=0;i<list.size();i++){
+            result[i]=list.get(i);
+        }
+        return result;
+    }
+    private static int myPow(int a,int b){
+        int rez=1;
+        for(int i=0;i<b;i++){
+            rez=rez*a;
+        }
+        return rez;
+    }
+    private static int myQuickPow(int a,int b){
+        return buffer[a];
+    }
 }
