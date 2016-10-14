@@ -25,85 +25,88 @@ id productName price quantity
 */
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Solution {
-    private static int maxId;
-    private static int id;
-    private static String prodName;
-    private static String price;
-    private static String quantity;
-    private static String[] parameters;
-
     public static void main(String[] args) throws IOException {
-            BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
-            String fileName = inputReader.readLine();
-            //String fileName = "r:\\1\\1.txt";
-            // to be commented
-        /*args = new String[]{"-c",
-                "Sorti plajnie sernie Sorti plajnie sernie Sorti plajnie sernie",
-                "15689.7758164",
-                "15151515"};*/
-            parameters = args;
-            getMaxId(fileName);
-            prepareId();
-            prepareProdName();
-            preparePrice();
-            prepareQuantity();
-            writeLine(fileName);
-        }
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = bufferedReader.readLine();
+        bufferedReader.close();
+        String productName = "";
 
-    private static void writeLine(String fileName) throws IOException {
-        BufferedWriter outWriter = new BufferedWriter(new FileWriter(fileName, true));
-        outWriter.write(Integer.toString(id) + prodName + price + quantity);
-        outWriter.close();
-    }
+        ArrayList<String> list = getStringList(fileName);
+        ArrayList<Long> idList = getIdList(fileName);
+        PrintWriter printWriter;
+        int index = idList.indexOf(Long.parseLong(args[1]));
 
-    private static void prepareQuantity() {
-        quantity = parameters[3];
-        if (quantity.length() <= 4) {
-            while (quantity.length() < 4) {
-                quantity += " ";
+        if (args[0].equals("-u"))
+        {
+            for (int i = 2; i < args.length - 2; i++)
+                productName = productName + args[i] + " ";
+
+            String trueProductName = setSpaces(productName, 30);
+            String truePrice = setSpaces(args[args.length - 2], 8);
+            String trueQuantity = setSpaces(args[args.length - 1], 4);
+            String id = setSpaces(args[1], 8);
+            String ourString = id + trueProductName + truePrice + trueQuantity;
+
+            if (!idList.contains(Long.parseLong(args[1])))
+            {
+                printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+                printWriter.println(ourString);
+            } else {
+                list.set(index, ourString);
+                printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+                for (String aString : list)
+                    printWriter.println(aString);
             }
-        } else {
-            quantity = quantity.substring(0, 4);
+            printWriter.close();
+        } else if (args[0].equals("-d")) {
+            list.remove(index);
+            printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+            for (String aString : list)
+                printWriter.println(aString);
+            printWriter.close();
         }
     }
 
-    private static void preparePrice() {
-        price = parameters[2];
-        if (price.length() <= 8) {
-            while (price.length() < 8) {
-                price += " ";
-            }
-        } else {
-            price = price.substring(0, 8);
+    public static ArrayList<String> getStringList (String fileName) throws IOException {
+        ArrayList<String> allList = new ArrayList<String>();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+        String line;
+        while ((line=bufferedReader.readLine()) != null) {
+            allList.add(line);
         }
+        bufferedReader.close();
+        return allList;
     }
 
-    private static void prepareProdName() {
-        prodName = parameters[1];
-        if (prodName.length() <= 30) {
-            while (prodName.length() < 30) {
-                prodName += " ";
-            }
-        } else {
-            prodName = prodName.substring(0, 30);
+    public static ArrayList<Long> getIdList (String fileName) throws IOException {
+        ArrayList<Long> allIds = new ArrayList<Long>();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+        String line;
+        Long currentId;
+        while ((line=bufferedReader.readLine()) != null) {
+            line = line.substring(0, 8).replaceAll("\\s", "");
+            currentId = Long.parseLong(line);
+            allIds.add(currentId);
         }
+        bufferedReader.close();
+        return allIds;
     }
 
-    private static void prepareId() {
-        // prepare id
-        id = maxId + 1;
-    }
 
-    private static void getMaxId(String file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String line = "";
-        maxId = 0;
-        while ((line = reader.readLine()) != null) {
-            Integer id = Integer.parseInt(line.substring(0, 8).replaceAll(" ",""));
-            maxId = maxId < id ? id : maxId;
+    public static String setSpaces (String previousName, int count) {
+        String trueName;
+        if (previousName.length()>count)
+            trueName = previousName.substring(0, count);
+        else
+        {
+            String s="";
+            for (int i = 0; i < (count  - previousName.length()); i++)
+                s = s+ " ";
+            trueName = previousName+s;
         }
-        reader.close();
+        return trueName;
     }
 }
