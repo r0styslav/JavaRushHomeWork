@@ -34,8 +34,8 @@ public class Ufo extends BaseObject
     @Override
     public void move()
     {
-        double dx = Math.random() * 2-1;
-        double dy = Math.random() * 2-1;
+        double dx = Math.random() * 2 - 1;
+        double dy = Math.random() * 2 - 1;
 
         x += dx;
         y += dy;

@@ -52,10 +52,10 @@ public class Space
                 System.out.print(event.getKeyCode());
                 if (event.getKeyCode() == KeyEvent.VK_LEFT)
                     ship.moveLeft();
-                //Если "стрелка вправо" - сдвинуть фигурку вправо
+                    //Если "стрелка вправо" - сдвинуть фигурку вправо
                 else if (event.getKeyCode() == KeyEvent.VK_RIGHT)
                     ship.moveRight();
-                //Если "пробел" - запускаем шарик
+                    //Если "пробел" - запускаем шарик
                 else if (event.getKeyCode() == KeyEvent.VK_SPACE)
                     ship.fire();
             }
@@ -63,10 +63,10 @@ public class Space
             //двигаем все объекты игры
             moveAllItems();
 
-            //проверяем столкновения
+            //проверяем столкновния
             checkBombs();
             checkRockets();
-            //удаляем умершие объекты из списков
+            //удаляем упершие объекты из списков
             removeDead();
 
             //Создаем НЛО (1 раз в 10 ходов)
